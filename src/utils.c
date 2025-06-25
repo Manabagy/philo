@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:26 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/06/25 18:48:27 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:31:24 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,11 @@ static int	check_integers(char *str)
 	return (1);
 }
 
-int	check_args(int argc, char **argv)
+int	check_args(char **argv)
 {
 	int	i;
 
 	i = 1;
-	if (argc < 5 || argc > 6)
-		return (0);
 	while (argv[i])
 	{
 		if (!check_integers(argv[i]))
@@ -40,6 +38,27 @@ int	check_args(int argc, char **argv)
 		i++;
 	}
 	return (1);
+}
+
+void	init_data(t_data *data)
+{
+	data->fork = NULL;
+	data->philo_count = 0;
+	data->start = 0;
+	data->eat_count = 0;
+	data->time_to_die = 0;
+	data->time_to_eat = 0;
+	data->time_to_sleep = 0;
+}
+
+void	parse_args(t_data *data, char **argv)
+{
+	data->philo_count = ft_atoi(argv[1]);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
+	if (argv[5])
+		data->eat_count = ft_atoi(argv[5]);
 }
 
 int	ft_atoi(const char *str)

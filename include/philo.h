@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:15:57 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/06/25 18:31:48 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/06/25 19:29:43 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int				philo_count;
+	int				eat_count;
 	int				time_to_eat;
 	int				time_to_die;
 	int				time_to_sleep;
@@ -37,7 +38,9 @@ typedef struct s_data
 	pthread_mutex_t	*fork;
 }					t_data;
 
-int					check_args(int argc, char **argv);
+int					check_args(char **argv);
 int					ft_atoi(const char *str);
+void				init_data(t_data *data);
+void				parse_args(t_data *data, char **argv);
 
 #endif
