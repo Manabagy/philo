@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:26 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/06/25 19:31:24 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:07:29 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_args(char **argv)
 
 void	init_data(t_data *data)
 {
-	data->fork = NULL;
+	data->forks = NULL;
 	data->philo_count = 0;
 	data->start = 0;
 	data->eat_count = 0;

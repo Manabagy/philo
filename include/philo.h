@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:15:57 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/06/25 19:29:43 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:13:58 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,36 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+typedef struct s_data	t_data;
+
 typedef struct s_philo
 {
-	int				id;
-	pthread_t		thread;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-}					t_philo;
+	int					id;
+	pthread_t			thread;
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
+	t_data				*data;
+	long				last_meal;
+	int					meals_eaten;
+}						t_philo;
 
 typedef struct s_data
 {
-	int				philo_count;
-	int				eat_count;
-	int				time_to_eat;
-	int				time_to_die;
-	int				time_to_sleep;
-	int				start;
-	pthread_mutex_t	*fork;
-}					t_data;
+	int					philo_count;
+	int					eat_count;
+	int					time_to_eat;
+	int					time_to_die;
+	int					time_to_sleep;
+	long				start;
+	pthread_mutex_t		*forks;
+	t_philo				*philos;
+	pthread_mutex_t		print_lock;
+}						t_data;
 
-int					check_args(char **argv);
-int					ft_atoi(const char *str);
-void				init_data(t_data *data);
-void				parse_args(t_data *data, char **argv);
+int						check_args(char **argv);
+int						ft_atoi(const char *str);
+void					init_data(t_data *data);
+void					parse_args(t_data *data, char **argv);
+void					start_philo(t_data *data);
 
 #endif
