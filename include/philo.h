@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:15:57 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/06/26 19:13:58 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:22:30 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ typedef struct s_philo
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	t_data				*data;
-	long				last_meal;
-	int					meals_eaten;
 }						t_philo;
 
 typedef struct s_data
@@ -42,7 +40,6 @@ typedef struct s_data
 	long				start;
 	pthread_mutex_t		*forks;
 	t_philo				*philos;
-	pthread_mutex_t		print_lock;
 }						t_data;
 
 int						check_args(char **argv);

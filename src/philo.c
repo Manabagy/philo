@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:55:59 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/06/26 19:13:17 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:22:13 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	create_forks(t_data *data)
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_count);
 	while (i < data->philo_count)
 		pthread_mutex_init(&data->forks[i++], NULL);
-	// pthread_mutex_init(&data->print_lock, NULL);
 }
 
 void	init_philos(t_data *data)
