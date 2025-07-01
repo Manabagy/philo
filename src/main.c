@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:15:30 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/06/26 18:41:25 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:12:06 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	if (!check_args(argv))
-		return (printf("Error\nMust be only numbers!\n"), 1);
+		return (printf("Error\nMust be valid numbers!\n"), 1);
 	init_data(&data);
 	parse_args(&data, argv);
 	// start_philo(&data);
+	printf("args: %d, %d, %d, %d, %d\n", data.philo_count, data.time_to_die, data.time_to_eat, data.time_to_sleep, data.eat_count);
 	return (0);
 }
