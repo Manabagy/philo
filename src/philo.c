@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:55:59 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/06/26 19:22:13 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/06 14:44:11 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,13 @@ void	init_philos(t_data *data)
 void	create_philos(t_data *data)
 {
 	int		i;
-	t_philo	*philo;
 
 	i = 0;
 	while (i < data->philo_count)
 	{
-		if (pthread_create(&data->philos[i].thread, NULL, philo_routine,
-				&data->philos[i]) != 0)
-			printf("Failed to create thread for philosopher %d\n",
-				data->philos[i].id);
+		if (pthread_create(&data->philos[i].thread, NULL, philo_routine, &data->philos[i]) != 0)
+			printf("Failed to create thread for philosopher %d\n", data->philos[i].id);
+		data->philos[i].id = i + 1;
 		pthread_join(data->philos[i].thread, NULL);
 	}
 }
