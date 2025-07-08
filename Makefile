@@ -3,7 +3,7 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = src/main.c src/utils.c src/parse.c
+SRC = src/main.c src/utils.c src/parse.c src/philo.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
