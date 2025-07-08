@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:26 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/08 18:26:32 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:40:03 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,14 @@ int	ft_atoi(const char *str)
 	return (integer * sign);
 }
 
-void	printf_time(t_philo *philo, char *str)
+void	printf_time(t_philo *philo, char *str, char *color)
 {
 	long long	time;
 
 	time = timestamp() - philo->data->start;
 	pthread_mutex_lock(&philo->data->print_mutex);
 	if (!philo->data->died)
-		printf("[%lld] %d %s\n", time, philo->id, str);
+		printf("%s[%lld] %d %s%s\n", color, time, philo->id, str, RESET);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
@@ -79,22 +79,35 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		usleep(1000);
-	while (!philo->data->died)
+	if (philo->data->philo_count == 1)
 	{
-		if (!check_life(philo))
-			return (NULL);
 		pthread_mutex_lock(philo->left_fork);
-		printf_time(philo, "has taken a fork");
-		pthread_mutex_lock(philo->right_fork);
-		printf_time(philo, "has taken a fork");
-		printf_time(philo, "is eating");
-		usleep(philo->data->time_to_eat * 1000);
-		philo->last_time_ate = timestamp();
-		pthread_mutex_unlock(philo->right_fork);
+		printf_time(philo, "has taken a fork", RED);
+		usleep(philo->data->time_to_die * 1000);
 		pthread_mutex_unlock(philo->left_fork);
-		printf_time(philo, "is sleeping");
-		usleep(philo->data->time_to_sleep * 1000);
-		printf_time(philo, "is thinking");
+		return (NULL);
+	}
+	while (1)
+	{
+		// if (!check_life(philo))
+		// 	return (NULL);
+		main_loop(philo);
 	}
 	return (NULL);
+}
+
+void	main_loop(t_philo *philo)
+{
+	pthread_mutex_lock(philo->left_fork);
+	printf_time(philo, "has taken a fork", WHITE);
+	pthread_mutex_lock(philo->right_fork);
+	printf_time(philo, "has taken a fork", WHITE);
+	printf_time(philo, "is eating", GREEN);
+	usleep(philo->data->time_to_eat * 1000);
+	philo->last_time_ate = timestamp();
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
+	printf_time(philo, "is sleeping", CYAN);
+	usleep(philo->data->time_to_sleep * 1000);
+	printf_time(philo, "is thinking", YELLOW);
 }

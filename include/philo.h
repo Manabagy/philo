@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:15:57 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/08 18:26:03 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:39:35 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@
 # include <sys/time.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+# define RESET "\033[0m"
+
+# define RED "\033[0;31m"
+# define GREEN "\033[0;32m"
+# define YELLOW "\033[0;33m"
+# define CYAN "\033[0;36m"
+# define WHITE "\033[0;37m"
 
 typedef struct s_data	t_data;
 
@@ -45,6 +53,7 @@ typedef struct s_data
 	pthread_mutex_t		died_mutex;
 	pthread_mutex_t		print_mutex;
 	pthread_mutex_t		meal_check_mutex;
+	pthread_t			monitor;
 	pthread_mutex_t		*forks;
 	t_philo				*philos;
 }						t_data;
@@ -53,10 +62,12 @@ int						check_args(char **argv);
 int						ft_atoi(const char *str);
 void					init_data(t_data *data);
 void					parse_args(t_data *data, char **argv);
-void					start_philo(t_data *data);
+int						start_philo(t_data *data);
 void					*philo_routine(void *arg);
 long long				timestamp(void);
-void					printf_time(t_philo *philo, char *str);
-int						check_life(t_philo *philo);
+void					printf_time(t_philo *philo, char *str, char *color);
+int						check_life(t_data *data);
+void					main_loop(t_philo *philo);
+void					*monitoring_loop(void *arg);
 
 #endif
