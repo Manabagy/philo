@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 19:28:29 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/12 19:31:38 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:42:42 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ int	check_life(t_data *data)
 		if ((time_now() - data->philos[i].last_time_ate) > data->time_to_die)
 		{
 			printf_time(&data->philos[i], "died", RED);
+			pthread_mutex_lock(&data->died_mutex);
 			data->died = 1;
+			pthread_mutex_unlock(&data->died_mutex);
 			pthread_mutex_unlock(&data->meal_check_mutex);
 			return (0);
 		}
@@ -69,7 +71,7 @@ void	*monitoring_loop(void *arg)
 	{
 		if (!check_life(data) || !done_eating(data))
 			break ;
-		usleep(500);
+		usleep(1000);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:15:57 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/16 11:59:42 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:04:35 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
-# include <sys/wait.h>
 # include <unistd.h>
 
 # define RESET "\033[0m"

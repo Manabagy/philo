@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:46:13 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/01 15:37:49 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:47:03 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ static int	letters_and_signs(char *str)
 	int	i;
 
 	i = 0;
+	if (!overflow(str))
+		return (0);
 	while (str[i])
 	{
-		if ((str[i] >= 'a' && str[i] <= 'z') || str[i] == '-' || !overflow(str))
+		if ((str[i] >= 'a' && str[i] <= 'z') || str[i] == '-')
 			return (0);
 		i++;
 	}

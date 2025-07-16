@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 19:21:30 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/16 12:34:27 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 15:00:43 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	eat(t_philo *philo)
 {
 	printf_time(philo, "is eating", GREEN);
+	pthread_mutex_lock(&philo->data->meal_check_mutex);
 	philo->last_time_ate = time_now();
+	pthread_mutex_unlock(&philo->data->meal_check_mutex);
 	usleep(philo->data->time_to_eat * 1000);
 	if (philo->data->eat_count != -1)
 	{
@@ -82,6 +84,9 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	pthread_mutex_lock(&philo->data->meal_check_mutex);
+	philo->data->start = time_now();
+	pthread_mutex_unlock(&philo->data->meal_check_mutex);
 	if (philo->data->philo_count == 1)
 	{
 		pthread_mutex_lock(philo->left_fork);
@@ -91,7 +96,7 @@ void	*philo_routine(void *arg)
 		return (NULL);
 	}
 	if (philo->id % 2 == 0)
-		usleep(500);
+		usleep(1000 * (philo->id % 10));
 	main_loop(philo);
 	return (NULL);
 }

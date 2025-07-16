@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:26 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/16 12:32:57 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:33:15 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ size_t	time_now(void)
 
 void	init_data(t_data *data)
 {
-	data->start = time_now();
 	data->died = 0;
 	data->done = 0;
 	pthread_mutex_init(&data->print_mutex, NULL);
@@ -62,14 +61,16 @@ void	printf_time(t_philo *philo, char *str, char *color)
 {
 	long long	time;
 
+	pthread_mutex_lock(&philo->data->died_mutex);
+	if (philo->data->died || philo->data->done)
+	{
+		pthread_mutex_unlock(&philo->data->died_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&philo->data->died_mutex);
 	time = time_now() - philo->data->start;
 	pthread_mutex_lock(&philo->data->print_mutex);
-	pthread_mutex_lock(&philo->data->eat_mutex);
-	pthread_mutex_lock(&philo->data->died_mutex);
-	if (!philo->data->died && !philo->data->done)
-		printf("%s[%lld] %d %s%s\n", color, time, philo->id, str, RESET);
-	pthread_mutex_unlock(&philo->data->died_mutex);
-	pthread_mutex_unlock(&philo->data->eat_mutex);
+	printf("%s[%lld] %d %s%s\n", color, time, philo->id, str, RESET);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
