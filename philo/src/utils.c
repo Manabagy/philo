@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:26 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/16 16:42:48 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 17:26:04 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,14 @@ void	printf_time(t_philo *philo, char *str, char *color)
 	pthread_mutex_unlock(&philo->data->died_mutex);
 	time = time_now() - philo->data->start;
 	pthread_mutex_lock(&philo->data->print_mutex);
+	pthread_mutex_lock(&philo->data->died_mutex);
+	if (philo->data->died || philo->data->done)
+	{
+		pthread_mutex_unlock(&philo->data->died_mutex);
+		pthread_mutex_unlock(&philo->data->print_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&philo->data->died_mutex);
 	printf("%s[%lld] %d %s%s\n", color, time, philo->id, str, RESET);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }

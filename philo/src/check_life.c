@@ -56,7 +56,9 @@ int	done_eating(t_data *data)
 	}
 	if (i == data->philo_count)
 	{
+		pthread_mutex_lock(&data->died_mutex);
 		data->done = 1;
+		pthread_mutex_unlock(&data->died_mutex);
 		return (printf("Dinner end\n"), 0);
 	}
 	return (1);
