@@ -3,7 +3,7 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread -g3
 
-SRC = src/main.c src/utils.c src/parse.c src/philo.c src/check_life.c src/dinner.c
+SRC = main.c utils.c parse.c philo.c check_life.c dinner.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

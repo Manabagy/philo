@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "philo.h"
 
 int	overflow(char *str)
 {
@@ -44,7 +44,7 @@ static int	letters_and_signs(char *str)
 		return (0);
 	while (str[i])
 	{
-		if ((str[i] >= 'a' && str[i] <= 'z') || str[i] == '-')
+		if (!(str[i] >= '0' && str[i] <= '9') && str[i] != '+')
 			return (0);
 		i++;
 	}
