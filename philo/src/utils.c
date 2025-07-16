@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:26 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/16 14:33:15 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:42:48 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ void	destroy(t_data *data)
 		}
 		free(data->forks);
 		data->forks = NULL;
-		pthread_mutex_destroy(&data->died_mutex);
-		pthread_mutex_destroy(&data->eat_mutex);
-		pthread_mutex_destroy(&data->print_mutex);
-		pthread_mutex_destroy(&data->meal_check_mutex);
 	}
+	pthread_mutex_destroy(&data->died_mutex);
+	pthread_mutex_destroy(&data->eat_mutex);
+	pthread_mutex_destroy(&data->print_mutex);
+	pthread_mutex_destroy(&data->meal_check_mutex);
 	if (data->philos)
 	{
 		free(data->philos);

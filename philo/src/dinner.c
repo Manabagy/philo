@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 19:21:30 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/16 15:00:43 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:55:06 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	eat(t_philo *philo)
 	pthread_mutex_lock(&philo->data->meal_check_mutex);
 	philo->last_time_ate = time_now();
 	pthread_mutex_unlock(&philo->data->meal_check_mutex);
-	usleep(philo->data->time_to_eat * 1000);
+	ft_usleep(philo->data->time_to_eat, philo);
 	if (philo->data->eat_count != -1)
 	{
 		pthread_mutex_lock(&philo->data->eat_mutex);
@@ -74,7 +74,7 @@ void	main_loop(t_philo *philo)
 		eat(philo);
 		leave_forks(philo);
 		printf_time(philo, "is sleeping", CYAN);
-		usleep(philo->data->time_to_sleep * 1000);
+		ft_usleep(philo->data->time_to_sleep, philo);
 		printf_time(philo, "is thinking", YELLOW);
 	}
 }
@@ -84,14 +84,11 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	pthread_mutex_lock(&philo->data->meal_check_mutex);
-	philo->data->start = time_now();
-	pthread_mutex_unlock(&philo->data->meal_check_mutex);
 	if (philo->data->philo_count == 1)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		printf_time(philo, "has taken a fork", WHITE);
-		usleep(philo->data->time_to_die * 1000);
+		ft_usleep(philo->data->time_to_die, philo);
 		pthread_mutex_unlock(philo->left_fork);
 		return (NULL);
 	}

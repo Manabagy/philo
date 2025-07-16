@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:15:57 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/16 14:04:35 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 15:53:35 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ size_t					time_now(void);
 void					printf_time(t_philo *philo, char *str, char *color);
 void					*monitoring_loop(void *arg);
 void					destroy(t_data *data);
+void					ft_usleep(size_t time, t_philo *philo);
 
 #endif

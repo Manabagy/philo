@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:55:59 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/16 15:02:34 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 17:01:00 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	init_philos(t_data *data)
 		data->philos[i].data = data;
 		data->philos[i].left_fork = &data->forks[i];
 		data->philos[i].right_fork = &data->forks[(i + 1) % data->philo_count];
+		data->philos[i].last_time_ate = data->start;
 		i++;
 	}
 	return (1);
@@ -99,6 +100,9 @@ int	join(t_data *data)
 
 int	start_philo(t_data *data)
 {
+	pthread_mutex_lock(&data->meal_check_mutex);
+	data->start = time_now();
+	pthread_mutex_unlock(&data->meal_check_mutex);
 	if (!create_forks(data))
 	{
 		destroy(data);
@@ -109,7 +113,6 @@ int	start_philo(t_data *data)
 		destroy(data);
 		return (0);
 	}
-	usleep(1000);
 	if (pthread_create(&data->monitor, NULL, monitoring_loop, data) != 0)
 	{
 		printf("Thread creation failed\n");

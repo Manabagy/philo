@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 19:28:29 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/16 14:42:42 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 17:00:07 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,25 @@ void	*monitoring_loop(void *arg)
 	{
 		if (!check_life(data) || !done_eating(data))
 			break ;
-		usleep(1000);
+		usleep(data->philo_count * 1000);
 	}
 	return (NULL);
+}
+
+void	ft_usleep(size_t time, t_philo *philo)
+{
+	size_t	start;
+
+	start = time_now();
+	while ((time_now() - start) < time)
+	{
+		pthread_mutex_lock(&philo->data->died_mutex);
+		if (philo->data->died)
+		{
+			pthread_mutex_unlock(&philo->data->died_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->data->died_mutex);
+		usleep(100);
+	}
 }
