@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:55:59 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/12 19:33:39 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:34:00 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	join(t_data *data)
 	if (pthread_join(data->monitor, NULL) != 0)
 	{
 		printf("Thread joining failed\n");
-		// destroy(data);
+		destroy(data);
 		return (0);
 	}
 	while (i < data->philo_count)
@@ -83,9 +83,10 @@ int	start_philo(t_data *data)
 	if (pthread_create(&data->monitor, NULL, monitoring_loop, data) != 0)
 	{
 		printf("Thread creation failed\n");
-		// destroy(data);
+		destroy(data);
 		return (0);
 	}
 	join(data);
+	destroy(data);
 	return (1);
 }

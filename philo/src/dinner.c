@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 19:21:30 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/12 19:37:03 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:34:27 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,38 @@ void	eat(t_philo *philo)
 	}
 }
 
+static void	take_forks(t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		printf_time(philo, "has taken a fork", WHITE);
+		pthread_mutex_lock(philo->right_fork);
+		printf_time(philo, "has taken a fork", WHITE);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->right_fork);
+		printf_time(philo, "has taken a fork", WHITE);
+		pthread_mutex_lock(philo->left_fork);
+		printf_time(philo, "has taken a fork", WHITE);
+	}
+}
+
+static void	leave_forks(t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
+}
+
 void	main_loop(t_philo *philo)
 {
 	while (1)
@@ -36,14 +68,9 @@ void	main_loop(t_philo *philo)
 			break ;
 		}
 		pthread_mutex_unlock(&philo->data->died_mutex);
-		pthread_mutex_lock(philo->left_fork);
-		printf_time(philo, "has taken a fork", WHITE);
-		pthread_mutex_lock(philo->right_fork);
-		printf_time(philo, "has taken a fork", WHITE);
+		take_forks(philo);
 		eat(philo);
-		// printf("ate->%d\nid->%d\n", philo->eaten, philo->id);
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
+		leave_forks(philo);
 		printf_time(philo, "is sleeping", CYAN);
 		usleep(philo->data->time_to_sleep * 1000);
 		printf_time(philo, "is thinking", YELLOW);

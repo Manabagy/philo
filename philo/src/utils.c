@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:26 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/12 19:27:52 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:32:57 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,30 @@ void	printf_time(t_philo *philo, char *str, char *color)
 	pthread_mutex_unlock(&philo->data->died_mutex);
 	pthread_mutex_unlock(&philo->data->eat_mutex);
 	pthread_mutex_unlock(&philo->data->print_mutex);
+}
+
+void	destroy(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	if (data->forks)
+	{
+		while (i < data->philo_count)
+		{
+			pthread_mutex_destroy(&data->forks[i]);
+			i++;
+		}
+		free(data->forks);
+		data->forks = NULL;
+		pthread_mutex_destroy(&data->died_mutex);
+		pthread_mutex_destroy(&data->eat_mutex);
+		pthread_mutex_destroy(&data->print_mutex);
+		pthread_mutex_destroy(&data->meal_check_mutex);
+	}
+	if (data->philos)
+	{
+		free(data->philos);
+		data->philos = NULL;
+	}
 }
