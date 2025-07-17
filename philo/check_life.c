@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 19:28:29 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/17 14:06:31 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:33:07 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	done_eating(t_data *data)
 		return (1);
 	}
 	pthread_mutex_unlock(&data->eat_mutex);
-	while (i < data->philo_count && data->died)
+	while (i < data->philo_count && !data->died)
 	{
 		pthread_mutex_lock(&data->eat_mutex);
 		if (data->philos[i].eaten >= data->eat_count)
