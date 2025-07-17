@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 19:28:29 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/17 14:33:07 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:20:19 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,21 @@ int	check_life(t_data *data)
 int	done_eating(t_data *data)
 {
 	int	i;
+	int	full;
 
-	i = 0;
-	pthread_mutex_lock(&data->eat_mutex);
 	if (data->eat_count == -1)
-	{
-		pthread_mutex_unlock(&data->eat_mutex);
 		return (1);
-	}
-	pthread_mutex_unlock(&data->eat_mutex);
-	while (i < data->philo_count && !data->died)
+	full = 0;
+	i = 0;
+	while (i < data->philo_count)
 	{
 		pthread_mutex_lock(&data->eat_mutex);
 		if (data->philos[i].eaten >= data->eat_count)
-			i++;
+			full++;
 		pthread_mutex_unlock(&data->eat_mutex);
+		i++;
 	}
-	if (i == data->philo_count)
+	if (full == data->philo_count)
 	{
 		pthread_mutex_lock(&data->died_mutex);
 		data->done = 1;
