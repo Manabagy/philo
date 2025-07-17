@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 19:28:29 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/16 17:00:07 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/17 13:59:18 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	check_life(t_data *data)
 	while (i < data->philo_count)
 	{
 		pthread_mutex_lock(&data->meal_check_mutex);
-		if ((time_now() - data->philos[i].last_time_ate) > data->time_to_die)
+		if (((time_now() - data->philos[i].last_time_ate) > data->time_to_die)
+			|| data->philo_count == 1)
 		{
 			printf_time(&data->philos[i], "died", RED);
 			pthread_mutex_lock(&data->died_mutex);
