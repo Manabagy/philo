@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 19:21:30 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/16 16:55:06 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:14:34 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	*philo_routine(void *arg)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		printf_time(philo, "has taken a fork", WHITE);
-		ft_usleep(philo->data->time_to_die, philo);
 		pthread_mutex_unlock(philo->left_fork);
 		return (NULL);
 	}
