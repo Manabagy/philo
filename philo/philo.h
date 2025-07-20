@@ -47,6 +47,7 @@ typedef struct s_data
 	int					philo_count;
 	int					eat_count;
 	int					done;
+	int					full;
 	int					time_to_eat;
 	size_t				time_to_die;
 	int					time_to_sleep;

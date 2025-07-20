@@ -25,6 +25,7 @@ void	init_data(t_data *data)
 {
 	data->died = 0;
 	data->done = 0;
+	data->full = 0;
 	pthread_mutex_init(&data->print_mutex, NULL);
 	pthread_mutex_init(&data->meal_check_mutex, NULL);
 	pthread_mutex_init(&data->eat_mutex, NULL);
