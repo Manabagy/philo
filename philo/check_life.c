@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 19:28:29 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/17 15:20:19 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/20 13:17:12 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int	check_life(t_data *data)
 	while (i < data->philo_count)
 	{
 		pthread_mutex_lock(&data->meal_check_mutex);
-		if (((time_now() - data->philos[i].last_time_ate) > data->time_to_die)
-			|| data->philo_count == 1)
+		if (((time_now() - data->philos[i].last_time_ate) > data->time_to_die))
 		{
 			printf_time(&data->philos[i], "died", RED);
 			pthread_mutex_lock(&data->died_mutex);
@@ -70,9 +69,11 @@ void	*monitoring_loop(void *arg)
 	data = (t_data *)arg;
 	while (1)
 	{
-		if (!check_life(data) || !done_eating(data))
+		if (!check_life(data))
 			break ;
-		usleep(data->philo_count * 1000);
+		if (!done_eating(data))
+			break ;
+		usleep(500);
 	}
 	return (NULL);
 }

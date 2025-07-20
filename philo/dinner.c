@@ -6,7 +6,7 @@
 /*   By: mabaghda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 19:21:30 by mabaghda          #+#    #+#             */
-/*   Updated: 2025/07/17 14:14:34 by mabaghda         ###   ########.fr       */
+/*   Updated: 2025/07/20 13:17:22 by mabaghda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	*philo_routine(void *arg)
 		return (NULL);
 	}
 	if (philo->id % 2 == 0)
-		usleep(1000 * (philo->id % 10));
+		usleep(1000);
 	main_loop(philo);
 	return (NULL);
 }
